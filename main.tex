@@ -172,19 +172,22 @@ Connectivity matrices are obtained for mean, bottom and surface currents for all
 \begin{equation}
     WCL_j = \dfrac{\sum_i \tilde{C}_{ji} L_{ji}}{\sum_i \tilde{C}_{ji}}
 \end{equation}
-where $L_{ji}$ is the distance between reef polygons $j$ and $i$. In addition to this metric, indicators such as the probability of exchange between reefs as well as the number of outgoing connections per reef can be computed. The mean values of these indicators for each type of currents are given in table \ref{tab:connect}. Bottom currents give the networks with smallest WCL and outdegree, suggesting that they drive infected materials on shorter geographical ranges and fewer reefs that the other two types of currents. However, as bottom currents also exhibit the largest average connection probability, they tend to exchange more infectious matter between connected reefs. Mean and surface currents, on the other hand, generate networks with similar WCL. However, although both currents show analogous spreading ranges, exchanges are twice smaller with surface currents and occur between less reefs.  This is imputable to the effect of the winds that prevent infectious materials to durably settle on reefs (see Discussion)
+where $L_{ji}$ is the distance between reef polygons $j$ and $i$. In addition to this metric, indicators such as the probability of exchange between reefs as well as the number of outgoing connections per reef can be computed. The mean values of these indicators for each type of currents are given in table \ref{tab:connect}. Bottom currents give the networks with smallest WCL and outdegree, suggesting that they drive infected materials on shorter geographical ranges and fewer reefs that the other two types of currents. However, as bottom currents also exhibit the largest average connection probability, they tend to exchange more infectious matter between connected reefs. Mean and surface currents, on the other hand, generate networks in which reefs have the same number of connections on average. However, exchanges of infectious materials occur with smaller probability on a  larger geographical range with surface currents. This is imputable to the effect of the winds that push infectious elements on further distances while preventing them from settling durably on reefs (see Discussion).
 
 \begin{table}
     \centering
     \begin{tabular}{|l|c|c|c|}
         \hline
-        & mean currents & bottom currents & surface currents \\
+                                    & mean currents      & bottom currents     & surface currents   \\
         \hline
-        \makecell{mean weighted \\connectivity length [km]} & 19.66 & 10.3 & 17.75 \\
+        \makecell{mean weighted \\
+        connectivity length [km]}   & 22.2               & 11.7                & 28.4               \\
         \hline
-        \makecell{mean exchange \\probability} & $\sim 0.0004$ & $\sim 0.001$ & $\sim 0.0002$ \\
+        \makecell{mean exchange \\
+        probability}                & $2.7\cdot 10^{-4}$ & $7.86\cdot 10^{-4}$ & $1.4\cdot 10^{-4}$ \\
         \hline
-        \makecell{mean outgoing \\degree} & 332 & 128 & 240 \\
+        \makecell{mean outgoing \\
+        degree}                     & 531                & 187                 & 531                \\
         \hline
     \end{tabular}
     \caption{Mean values of the graph theory indicators used to analyze the connectivity matrices obtained with mean, bottom and surface currents}
