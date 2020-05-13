@@ -1,0 +1,22 @@
+# LEW
+
+TD: Would it be possible to have some references regarding bottom current parametrization ?
+
+# ERINN
+
+TD: Would it be possible to get the data used to plot the upper graph of Fig. 2 in order to merge two plots into one graph ?
+TD: In the current formulation of the model, we define two transmission rates for intra- and inter-reef infectious (although we give them the same value). Does that make sense ? Do we have any reason to belive that the 2 processes occur with different transmission rates of should we simplify the model by using one single transmission rate ?
+
+# EMMANUEL
+
+TD: Any suggestion on how Fig. 1 could be modified while still conveying the same message ?
+
+# DAN
+
+TD: Could you please provide the coral disease references you mentioned in your comment ?
+
+# ALL
+
+TD: Do we have any idea of time needed for organic matter degradation by seawater ? That might be useful for the discussion about our LPT experiments.
+TD: Model results suggest a that coral have weak resistance against causative agent of SCTLD (I0 between 0.05% and 0.1%). What would it mean from a biological point of view ?
+TD: If causative agent is transported by neutrally buoyant materials, what are the likely vector candidates ? Do we have knowledge of another disease transmitted in a similar way ? 
