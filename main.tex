@@ -195,7 +195,9 @@ Best fit to observations is obtained with transmission rate $\beta_0'=6.45$ days
     \label{fig:calibration}
 \end{figure}
 
-A summary of the epidemiological model results for each type of currents and different values of the infection threshold $I_0$ are shown in figure \ref{fig:results}. Two metrics are used to assess the accuracy of the model. First, the modeled front speed is compared to the reference rate of 92 m/day derived by \citep{muller2020spatial}. Furthermore, we compute the mean of the distances between each point where the SCTLD has been observed during our simulated period and the centroid of the closest reef polygon predicted to be infected by our model during the same period. Figure \ref{fig:results} show that mean barotropic currents perform the best regarding both criteria with a front speed of ~120 m/day and a mean accuracy of ~2 km; while surface currents produce the worst results with respect to both front speed and proximity to the observed affected reefs. Moreover, an interval of optimal values of the infection threshold $I_0$ is observed for both mean and bottom currents between $I_0=5 \times 10^{-4}$ and $I_0=10^{-3}$. For $I_0 > 10^{-3}$, intra-reef infection is strongly impeded and populations of infectious individuals on infected reefs are not sufficiently large to infect other colonies on reefs they are connected to. For values of $I_0$ lower than $5 \times 10^{-4}$ on the other hand, intra-reef infection dominates and coral population on infected reefs is removed too fast to efficiently spread the disease through the network.
+A summary of the epidemiological model results for each type of currents and different values of the infection threshold $I_0$ are shown in figure \ref{fig:results}. Two metrics are used to assess the accuracy of the model. First, the modeled front speed is compared to the reference rate of 92 m/day derived by \citep{muller2020spatial}. Furthermore, we compute the mean of the distances between each point where the SCTLD has been observed during our simulated period and the centroid of the closest reef polygon predicted to be infected by our model during the same period. Figure \ref{fig:results} show that mean barotropic currents perform the best regarding both criteria with a front speed of 107 m/day and a mean accuracy of $\slim ~1.2$ km; while surface currents produce the worst results with respect to both front speed and proximity to the observed affected reefs.
+
+Moreover, results of Fig. \ref{fig:results} show a strong dependence to infection threshold $I_0$. Front speeds of both mean and bottom currents reach a plateau for values of infection threshold between $I_0=0.05\%$ and $I_0=0.1\%$, while the minimal prediction error is attained around $I_0 \approx 0.078\%$ with mean currents. For $I_0 > 0.1\%$, intra-reef infection is strongly impeded and populations of infectious individuals on infected reefs are not sufficiently large to infect other colonies on reefs they are connected to. For values of $I_0$ lower than $0.05\%$ on the other hand, intra-reef infection dominates and coral population on infected reefs is removed too fast to efficiently spread the disease through the network. Model results suggest that propagation of the disease only occurs for fairly small values of $\I_0$, implying low coral resistance to the causative agent of the SCTLD. 
 
 \begin{figure}
     \centering
@@ -232,21 +234,20 @@ The results shown in figure \ref{fig:results} were obtained by removing the larg
 \section{Discussion and conclusions}
 
 %% --- SUMMARY OF TAKE HOME MESSAGES --- %%
-\begin{itemize}
-    \item Disease transmitted in about 6.45 days while infectious corals are removed in 6.99 days
-    \item Mean barotropic currents are the most likey driver of the causative agent of the disease
-    \item Propagation extremely sensitive to the value of the infection threshold $I_0$ with realistic spread of the disease occurring for threshold values between 0.05 and 0.1 \%    
-\end{itemize}
+
+Calibrating our model with observations, we found a characteristic transmission time of 6.45 days as well as a removal rate of 6.99 days for the SCTLD, which agrees with transmission experiments. Feeding this parameters to the model, our simulation suggest that only mean current are able to reproduce the observed spread o the disease. Bottom current do not spread infectious matter on a sufficient geographical range while surface currents do not allow infected elements to settle durably on reefs. This therefore suggests that the causative agent of the SCTLD disease might be transported within neutrally buoyant materials inside the water column. Assuming this mode of transport, propagation of the disease from reef to reef only occurs for a narrow range of values of infection threshold $I_0$. This threshold is defined as the maximum proportion of infectious corals that a colony can withstand without the disease to spread. As disease spread occurs for threshold values of in the range $0.05-0.1\%$, this suggests that corals have low resistance to the SCTLD.
 
 %% --- DISCUSSION OF TAKE HOME MESSAGES/MAIN RESULTS --- %%
 
-% 1. MEAN BAROTROPIC CURRENTS => NEUTRALLY BUOYANT VECTOR 
+% 1. MODEL PARAMETERS
+\textcolor{blue}{Discussion about transmission/removal rates values here}
+
+% 2. MEAN BAROTROPIC CURRENTS => NEUTRALLY BUOYANT VECTOR 
 \textcolor{blue}{Model suggests causative agent transported by neutrally buoyant materials ? Which are the potential vectors then ? Is there any comment to make about that ?}
 
-% 2. IMPACT OF I0/APPEARANCE OF PLATEAU
+% 3. IMPACT OF I0/APPEARANCE OF PLATEAU
 Coral resistance to the SCTLD in modeled by parameter $I_0$, defined as the maximum proportion of the colony that can get infected without causing the disease to spread to the rest of the colony. Our simulations suggest that this value must be fairly low (around 0.01\%) in order for the disease to spread from reef to reef. This seems to imply that susceptible coral species have very weak defense mechanisms against the causative agent of the disease. \textcolor{blue}{What can we deduce from that, biologically speaking ?}
 
-% 3. ???
 
 % In this model, disease transmission from coral to coral withing the same reef and inter-reef transmission by infectious matter driven by currents are differentiated using parameters $\beta$ and $\beta'$. \textcolor{blue}{Does that make any sense though ? Or should we simply consider one single transmission rate}
 
