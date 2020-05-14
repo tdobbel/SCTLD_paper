@@ -5,7 +5,7 @@ TD: Would it be possible to have some references regarding bottom current parame
 # ERINN
 
 TD: Would it be possible to get the data used to plot the upper graph of Fig. 2 in order to merge two plots into one graph ?
-TD: In the current formulation of the model, we define two transmission rates for intra- and inter-reef infectious (although we give them the same value). Does that make sense ? Do we have any reason to belive that the 2 processes occur with different transmission rates of should we simplify the model by using one single transmission rate ?
+TD: In the current formulation of the model, we define two transmission rates for intra- and inter-reef infectious (although we give them the same value). Does that make sense ? Do we have any reason to believe that the 2 processes occur with different transmission rates of should we simplify the model by using one single transmission rate ?
 
 # EMMANUEL
 
@@ -14,6 +14,8 @@ TD: Any suggestion on how Fig. 1 could be modified while still conveying the sam
 # DAN
 
 TD: Could you please provide the coral disease references you mentioned in your comment ?
+% * <Daniel Holstein> 08:04:56 14 May 2020 UTC-0500:
+% Will do this week!
 
 # ALL
 
