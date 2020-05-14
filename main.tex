@@ -122,9 +122,9 @@ where $\tilde{C}_{ij}$ is the entry of reef $(i,j)$ of the normalized potential 
 where $I_0$ is a threshold on the infection population above which intra-reef transmission becomes significant, and $\tau$ is a measure of the interval over which the transition for low to high transmission occurs. As long as the proportion of infectious corals on reef $j$ is below $I_0$, the only infection mechanism taking place is connectivity-driven transmission at rate $\beta$. Once the threshold is exceeded ( $I_j \geq I_0$ ), intra-reef transmission with rate $\beta'_0$ is activated. A larger value of threshold $I_0$ corresponds to a greater resistance to disease for corals and therefore a slower spread of the disease within reef $j$. For this study the same values were used for $\beta$ and $\beta'_0$.
 
 \subsubsection{Calibration of the model coefficients}
-Values of $\sigma$ and $\beta_0'$ are fitted to observations in order to accurately simulate the temporal evolution of $S_j,I_j,R_j$ on each infected reef polygon. To do so, Eqs $\ref{eq:epidemio}$, representing the disease dynamics through the entire FRT, are simplified to a single-reef SIR system:
-% * <emuller@mote.org> 06:44:25 05 May 2020 UTC-0400:
-% Do we want to include the parameter estimations from the meta-analysis to show that they are reasonable and valid, or would this go in the discussion?
+Transmission and removal parameters of $\sigma$ and $\beta_0'$ are fitted to observations in order to accurately simulate the temporal evolution of $S_j,I_j,R_j$ on each infected reef polygon. \textcolor{blue}{[some details about parameter estimations from the meta-analysis would be nice here]}
+
+To relate our model framework to the compiled data, Eqs $\ref{eq:epidemio}$ are simplified to a single-reef SIR system:
 \begin{equation}
     \begin{aligned}
         \dfrac{dS}{dt} &= -\beta'_0SI \\
@@ -132,23 +132,12 @@ Values of $\sigma$ and $\beta_0'$ are fitted to observations in order to accurat
         \dfrac{dR}{dt} &= \sigma I
     \end{aligned}\label{eq:simplified}
 \end{equation}
-Eqs \ref{eq:simplified} give a reasonable approximation of the evolution of the disease on sub-reefs for which $I_j > I_0$, as intra-reef infection, when activated, is the dominant infection mechanism. Using this approximation, the ratio $\beta_0'/\sigma$ is found by imposing that the proportion of susceptible corals that remains after the disease has vanished ($S_\infty$) matches with the observations. A standard property of a SIR model solution is that
+These equations give a reasonable approximation of the evolution of the disease on sub-reefs for which $I_j > I_0$, as intra-reef infection, when activated, is the dominant infection mechanism. Using this approximation, the ratio $\beta_0'/\sigma$ is imposed by matching the modeled proportion of susceptible corals remaining after the disease has vanished ($S_\infty$) with observations. A standard property of a SIR model solution is that
 \begin{equation}
     S_\infty - \frac{\sigma}{\beta_0'}\log(S_{\infty}/S_0) = 1\label{eq:ratio}
 \end{equation}
-where the initial proportion of susceptible corals is taken equal to $1-I_0$ (see for instance \cite{Murray07}). The ratio $\beta'_0/\sigma$ is then used to find the value of $\beta'_0$ that reproduces the observed temporal evolution of the state of the coral colonies, as shown in figure \ref{fig:calibration}. The calibrated values of the transmission and removal rates are then given by $\beta_0'=6.45$ days$^{-1}$ and $\sigma=7$ days$^{-1}$. This derived characteristic transmission time agrees with direct measurements in tanks as the average transmission time observed during experiments was about 10.5 days.
-% * <emmanuel.hanert@uclouvain.be> 21:10:47 06 May 2020 UTC+0200:
-% OK, but you don't say how do you find the value of sigma...
-% ^ <thomas.dobbelaere@uclouvain.be> 09:13:12 07 May 2020 UTC+0200:
-% The value of sigma is obtained using the beta/sigma ratio
+where the initial proportion of susceptible corals is taken equal to $1-I_0$ (see for instance \cite{Murray07}). The obtained $\beta'_0/\sigma$ ratio is then used to find the value of $\beta'_0$ that reproduces the observed temporal evolution of the state of the coral colonies.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=.7\textwidth]{figures/image2.png}
-    \includegraphics[width=.69\textwidth]{figures/sir_obs.png}
-    \caption{\textbf{Above:} Observed disease prevalence over time (all colonies from all sites), error bars are the 95\% confidence intervals. \textbf{Below:} Modeled disease prevalence over time usi ng equations \ref{eq:simplified} using calibrated transmission and removal parameters  $\beta_0'=6.45$ days$^{-1}$ and $\sigma=7$ days$^{-1}$. \emphc{This figure could probably be improved by showing observations and models results on the same graph...} \textcolor{blue}{To do: ask data to Erinn}}
-    \label{fig:calibration}
-\end{figure}
 \subsubsection{Initialization of the model}
 In order to solve Eqs. \ref{eq:epidemio}, initial conditions are needed, \ie proportions of susceptible, infectious and recovered corals at the beginning of the simulated period. This information is constructed based on different field-collected datasets: : (i) Coral Reef Evaluation and Monitoring Project (CREMP; 2014–2017), (ii) CREMP Presence/Absence Data (CREMP P\_A; 2016–2017), (iii) Southeast Florida Coral Reef Evaluation and Monitoring Project (SECREMP; 2014– 2017), (iv) Florida Reef Resilience Program Disturbance Response Monitoring (FRRP; 2014–2017), (v) Hurricane Irma Rapid Reef Assessment (IRMA; 2017, \cite{viehman2018}), (vi) the Southeast Florida Action Network citizen science program (SEAFAN; 2014–2017), and (vii) the Southern Coral Disease Margin field effort (2017; \cite{neely2018surveying}). These datasets give the locations and dates at which the SCTLD has been observed throughout the FRT. Using this information, we first delineate an infected zone by constructing the concave hull of the points where the disease was observed before May 2018. The reefs infected prior to the beginning of our simulated period are then defined as the reefs located inside the constructed zone. The time of observed infection is then spatially interpolated on each reef of the infected zone by kriging with a Gaussian semivariogram using Python \texttt{pyKrige} module. Assuming a state $(S,I,R)=(1-I_0, I_0, 0)$ when the disease was observed, the proportions of susceptible, infectious and removed corals on each reef of the infected zone on the 1st May 2018 is finally approximated using the simplified equations \ref{eq:simplified}. Reefs outside of the infected zone are initialized with a population of 100\% of susceptible corals.  
 \subsubsection{Computation of front displacement rate}
@@ -158,7 +147,7 @@ In order to solve Eqs. \ref{eq:epidemio}, initial conditions are needed, \ie pro
     \caption{Method used to compute the disease front displacement during a simulated time interval.\textbf{a.} Concave hull of the infected polygons at the beginning of the simulated period $H_0$. \textbf{b.} Concave hull of the polygons infected during the simulated simulated $H_1$. \textbf{c.} Arrow showing the computed front displacement during simulated time interval between $H_0$ and $H_2$, the union of $H_0$ and $H_1$.}
     \label{fig:hull}
 \end{figure}
-\citep{muller2020spatial} estimated the speed of the spreading STCLD epidemics at around 92 m/day in the southern section of the FRT. In order assess our simulation results in regard to this value, we developed a methodology to compute the displacement of the disease front during a given time interval within our simulatd period. First, the concave hull of the infected polygons at the beginning of the time interval $H_0$ is computed. Then the concave hull of the polygons infected during the time interval $H_1$ is computed while the concave hull $H_2$ is defined as the union of $H_0$ and $H_1$. This methodology is illustrated in figure \ref{fig:hull}. The distance traveled by the disease front is then obtained by computing:
+\citep{muller2020spatial} estimated the speed of the spreading STCLD epidemics at around 92 m/day in the southern section of the FRT. In order assess our simulation results in regard to this value, we developed a methodology to compute the displacement of the disease front during a given time interval within our simulatzd period. First, the concave hull of the infected polygons at the beginning of the time interval $H_0$ is computed. Then the concave hull of the polygons infected during the time interval $H_1$ is computed while the concave hull $H_2$ is defined as the union of $H_0$ and $H_1$. This methodology is illustrated in figure \ref{fig:hull}. The distance traveled by the disease front is then obtained by computing:
 \begin{equation}
     \max\limits_{\mathbf{x}_2\in H_2}\min\limits_{\mathbf{x}_0\in H_0} \|\mathbf{x}_2 - \mathbf{x}_0\|_2
 \end{equation}
@@ -195,6 +184,17 @@ where $L_{ji}$ is the distance between reef polygons $j$ and $i$. In addition to
 \end{table}
 
 \subsection{Epidemiological model results}
+
+Best fit to observations is obtained with transmission rate $\beta_0'=6.45$ days$^{-1}$ and removal rate $\sigma=6.99$ days$^{-1}$. Comparison of the evolution of the state described by Eqs \ref{eq:simplified} results with observations is shown in figure \ref{fig:calibration}. Transmission and removal rates are found to have fairly close values with ratio $\beta_0'/\sigma$ being equal to $1.0345$. This proximity in rates value is due to observations exhibiting a proportion of susceptible individuals at the end of the outbreak on the reef around $85\%$. This causes the instantaneous proportion of infectious individuals on the reef to remain pretty low through the outbreak, with a maximum value of about $0.4\%$. These results are in accordance with the characteristic infection time of $\sim 10.5$ days deduced from transmission experiments. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.7\textwidth]{figures/image2.png}
+    \includegraphics[width=.69\textwidth]{figures/sir_obs.png}
+    \caption{\textbf{Above:} Observed disease prevalence over time (all colonies from all sites), error bars are the 95\% confidence intervals. \textbf{Below:} Modeled disease prevalence over time usi ng equations \ref{eq:simplified} using calibrated transmission and removal parameters  $\beta_0'=6.45$ days$^{-1}$ and $\sigma=7$ days$^{-1}$. \emphc{This figure could probably be improved by showing observations and models results on the same graph...} \textcolor{blue}{To do: ask data to Erinn}}
+    \label{fig:calibration}
+\end{figure}
+
 A summary of the epidemiological model results for each type of currents and different values of the infection threshold $I_0$ are shown in figure \ref{fig:results}. Two metrics are used to assess the accuracy of the model. First, the modeled front speed is compared to the reference rate of 92 m/day derived by \citep{muller2020spatial}. Furthermore, we compute the mean of the distances between each point where the SCTLD has been observed during our simulated period and the centroid of the closest reef polygon predicted to be infected by our model during the same period. Figure \ref{fig:results} show that mean barotropic currents perform the best regarding both criteria with a front speed of ~120 m/day and a mean accuracy of ~2 km; while surface currents produce the worst results with respect to both front speed and proximity to the observed affected reefs. Moreover, an interval of optimal values of the infection threshold $I_0$ is observed for both mean and bottom currents between $I_0=5 \times 10^{-4}$ and $I_0=10^{-3}$. For $I_0 > 10^{-3}$, intra-reef infection is strongly impeded and populations of infectious individuals on infected reefs are not sufficiently large to infect other colonies on reefs they are connected to. For values of $I_0$ lower than $5 \times 10^{-4}$ on the other hand, intra-reef infection dominates and coral population on infected reefs is removed too fast to efficiently spread the disease through the network.
 
 \begin{figure}
@@ -232,6 +232,11 @@ The results shown in figure \ref{fig:results} were obtained by removing the larg
 \section{Discussion and conclusions}
 
 %% --- SUMMARY OF TAKE HOME MESSAGES --- %%
+\begin{itemize}
+    \item Disease transmitted in about 6.45 days while infectious corals are removed in 6.99 days
+    \item Mean barotropic currents are the most likey driver of the causative agent of the disease
+    \item Propagation extremely sensitive to the value of the infection threshold $I_0$ with realistic spread of the disease occurring for threshold values between 0.05 and 0.1 \%    
+\end{itemize}
 
 %% --- DISCUSSION OF TAKE HOME MESSAGES/MAIN RESULTS --- %%
 
