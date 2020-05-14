@@ -6,6 +6,7 @@ TD: Would it be possible to have some references regarding bottom current parame
 
 TD: Would it be possible to get the data used to plot the upper graph of Fig. 2 in order to merge two plots into one graph ?
 TD: In the current formulation of the model, we define two transmission rates for intra- and inter-reef infectious (although we give them the same value). Does that make sense ? Do we have any reason to believe that the 2 processes occur with different transmission rates of should we simplify the model by using one single transmission rate ?
+TD: If I remember well, the transmission experiments performed showed a transmission time of ~10.5 days ? Is that so ? And can we cite these results to support the 6.45 days obtained by model fitting to observations ?
 
 # EMMANUEL
 
