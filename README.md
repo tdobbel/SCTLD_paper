@@ -34,6 +34,6 @@
 * § 5-6 : Limitations and improvement
   1. Limitations of 2d model
   2. Improvement of epidemiological model
-    * Division into highly/intermediately/weakly susceptible corals
-    * Use coral coverage
+     	* Division into highly/intermediately/weakly susceptible corals
+     	* Use coral coverage
 * § 7 : End on positive note. Explain how questions of intro have been answered. Explain how our results help management of this type of epidemic (in Florida and elsewhere)
