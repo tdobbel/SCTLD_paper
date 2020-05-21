@@ -100,6 +100,39 @@ The simulated currents can then be used to model dispersal of infectious materia
 Using these three velocity fields, virtual particles are then released on all the reefs composing the FRT to model the dispersal of infected materials carrying the disease causative agent. The locations of the reefs of Florida are extracted from the "coral reefs and hardbottom" layer of the Unified Florida Reef Tract Map \citep{fwc2017unified}. The polygon of this reef map are then further divided into 500 m squares in order to track the propagation of the disease with a finer geographical resolution, generating a total of 16823 polygons. % \textcolor{red}{(14058 without the big Vaca reef)}
 At the beginning of each simulated months and for each type of currents, a total of about $1.5 \times 10^6$ particles are released over all the reef polygons. These particles have a state composed of their polygon of origin as well as their mass, initialized to 1, that they loose at a constant rate $\gamma$ as they are moved by surface, mean or bottom currents. \textcolor{blue}{As monthly simulations are performed, the value of $\gamma$ is chosen so that particles have a half life of 30 days}. When the particles are brought over reef polygons by currents, the amount of infected mass that lands on the polygon is recorded in monthly potential connectivity matrices whose entries are denoted $C_{ij}$. The matrix rows correspond to the source reefs and the columns correspond to the destination reefs. Hence $C_{ij}$ represents the mass of infected material originating from sub-reef i that has settled on sub-reef j. This matrix is then normalized by dividing each of its rows $i$ by the the total mass of particles released on polygon $i$ in order to obtained the normalized potential connectivity matrix $\tilde{C}$, whose entry $\tilde{C}_{ij}$ gives the probability that infectious material produced on sub-reef $i$ settles on sub-reef $j$. Connectivity matrices are computed for each type of current and for each month of the simulated period.
 
+These connectivity matrices can be more easily handled by interpreting them as large graphs whose vertices are reefs. Such networks can then be analyzed using graph theory tools. In this study, 5 potential connectivity measures are used to interpret our monthly computed networks. These indicators are summarize in Table \ref{tab:indicator}
+
+\begin{table}
+    \centering
+    \begin{tabular}{|p{4cm}|p{5cm}|p{4cm}|}
+        \hline
+        \textbf{Indicators} & \textbf{Description} & \textbf{What it shows} \\
+        \hline
+            Weighted connectivity length (WCL) & 
+            Average dispersal distance from origin to destination reef for all infectious elements released over a reef & 
+            Average distance at which a reef can send infectious matter \\
+        \hline
+            Out-degree &
+            Number of out-going connections originating from a given reef &
+            Potential for a reef to spread the disease \\
+        \hline
+            Fraction exchanged &
+            Fraction of infectious material produced on a given reef that settles on another reef &
+            Efficiency of potential disease spread  \\
+        \hline
+            Fraction lost &
+            Fraction of infectious material produced on a reef that does not settle on any other reef &
+            Efficiency of potential disease spread \\
+        \hline
+            Isolation &
+            Fraction of infectious material settling on a given reef that has been released on another reef &
+            Potential for disease to spread on a given reef \\
+        \hline            
+    \end{tabular}
+    \caption{Indicators used to analyze the modeled exchanges of infected material for each considered type of currents and for each simulated month}
+    \label{tab:indicator}
+\end{table}
+
 % --> Subsection 2
 \subsection{Epidemiological modeling}
 % --> Subsubsection 2.1
@@ -132,10 +165,14 @@ Due to the low values of the entries of the normalized connectivity matrix $\til
 \begin{equation}
     S_\infty - \frac{\sigma}{\beta_0'}\log(S_{\infty}/S_0) = 1\label{eq:ratio}
 \end{equation}
-where the initial proportion of susceptible corals is taken equal to $1-I_0$ (see for instance \cite{Murray07}). The obtained $\beta'_0/\sigma$ ratio is then used to find the value of $\beta'_0$ that reproduces the observed temporal evolution of the state of the coral colonies.
+where the initial proportion of susceptible corals is taken equal to $1-I_0$ (see for instance \cite{Murray07}). In the framework of Eqs. \ref{eq:simplified}, the ratio $\beta_0'/\sigma$ gives the value of the basic reproduction number $R_0$, defined as the average number of secondary cases produced by one
+infected individual introduced into a population of susceptible individuals \citep{keeling2007stochastic}. This
+number is used in epidemiological models to determine whether an emerging infectious disease can spread in a
+population ($R_0 > 1$) or not ($R_0 < 1$). The obtained basic reproduction number is then used to find the value of $\beta'_0$ that reproduces the observed temporal evolution of the state of the coral colonies.
 
 \subsubsection{Initialization}
 In order to solve Eqs. \ref{eq:epidemio}, initial conditions are needed, \ie proportions of susceptible, infectious and recovered corals at the beginning of the simulated period. This information is constructed based on different field-collected datasets: : (i) Coral Reef Evaluation and Monitoring Project (CREMP; 2014–2017), (ii) CREMP Presence/Absence Data (CREMP P\_A; 2016–2017), (iii) Southeast Florida Coral Reef Evaluation and Monitoring Project (SECREMP; 2014– 2017), (iv) Florida Reef Resilience Program Disturbance Response Monitoring (FRRP; 2014–2017), (v) Hurricane Irma Rapid Reef Assessment (IRMA; 2017, \cite{viehman2018}), (vi) the Southeast Florida Action Network citizen science program (SEAFAN; 2014–2017), and (vii) the Southern Coral Disease Margin field effort (2017; \cite{neely2018surveying}). These datasets give the locations and dates at which the SCTLD has been observed throughout the FRT. Using this information, we first delineate an infected zone by constructing the concave hull of the points where the disease was observed before May 2018. The reefs infected prior to the beginning of our simulated period are then defined as the reefs located inside the constructed zone. The time of observed infection is then spatially interpolated on each reef of the infected zone by kriging with a Gaussian semivariogram using Python \texttt{pyKrige} module. Assuming an initial state $(S,I,R)=(1-I_0, I_0, 0)$ when the disease was observed, the proportions of susceptible, infectious and removed corals on each reef of the infected zone on the 1st May 2018 is finally approximated using the simplified equations \ref{eq:simplified}. Reefs outside of the infected zone are initialized with a population of 100\% of susceptible corals.  
+
 \subsubsection{Computation of front displacement rate}
 \begin{figure}
     \centering
@@ -157,30 +194,37 @@ Connectivity matrices are obtained for mean, bottom and surface currents for all
 \begin{equation}
     WCL_j = \dfrac{\sum_i \tilde{C}_{ji} L_{ji}}{\sum_i \tilde{C}_{ji}}
 \end{equation}
-where $L_{ji}$ is the distance between reef polygons $j$ and $i$. Another relevant connectivity measure is the local retention, \ie the proportion of elements released on a given reef that settles on the same reef. In addition to these two metric, indicators such as the probability of exchange between reefs as well as the number of outgoing connections per reef can be computed. The mean values of these indicators for each type of currents are given in table \ref{tab:connect}. Bottom currents give the networks with smallest WCL and outdegree, suggesting that they drive infected materials on shorter geographical ranges and fewer reefs that the other two types of currents. This behavior is consistent with bottom currents showing the largest local retention. However, as bottom currents also exhibit the largest average connection probability, they tend to exchange more infectious matter between connected reefs. Mean and surface currents, on the other hand, generate networks with similar WCL. However, although both currents show analogous spreading ranges, exchanges are almost twice smaller with surface currents and occur between less reefs. Furthermore, surface currents exhibit very weak local retention compared to the two other types of current. This is imputable to the effect of the winds that prevent infectious materials to durably settle on reefs.
+where $L_{ji}$ is the distance between reef polygons $j$ and $i$. Another relevant connectivity measure is the local retention, \ie the proportion of elements released on a given reef that settles on the same reef. In addition to these two metric, indicators such as the probability of exchange between reefs as well as the number of outgoing connections per reef can be computed. The mean values of these indicators for each type of currents are given in table \ref{fig:connect}. Bottom currents give the networks with smallest WCL and outdegree, suggesting that they drive infected materials on shorter geographical ranges and fewer reefs that the other two types of currents. This behavior is consistent with bottom currents showing the largest local retention. However, as bottom currents also exhibit the largest average connection probability, they tend to exchange more infectious matter between connected reefs. Mean and surface currents, on the other hand, generate networks with similar WCL. However, although both currents show analogous spreading ranges, exchanges are almost twice smaller with surface currents and occur between less reefs. Furthermore, surface currents exhibit very weak local retention compared to the two other types of current. This is imputable to the effect of the winds that prevent infectious materials to durably settle on reefs.
 
-\begin{table}
+\begin{figure}
     \centering
-    \begin{tabular}{|l|c|c|c|}
-        \hline
-                                   & mean currents      & bottom currents    & surface currents   \\
-        \hline
-        \makecell{mean weighted \\
-        connectivity length [km]}  & 20.63              & 12.25              & 21.39              \\
-        \hline
-        \makecell{mean exchange 
-        \\probability}             & $2.9\times 10^{-4}$ & $7.5\times 10^{-4}$ & $1.8\times 10^{-4}$ \\
-        \hline
-        \makecell{mean outgoing \\
-        degree}                    & 416                & 159                & 321 \\
-        \hline
-        \makecell{mean local  \\
-        retention}                 & 0.001              & 0.0021             & 0.0003 \\
-        \hline
-    \end{tabular}
-    \caption{Mean values of the graph theory indicators used to analyze the connectivity matrices obtained with mean, bottom and surface currents}
-    \label{tab:connect}
-\end{table}
+    \includegraphics[width=.99\textwidth]{figures/connect_paper.png}
+    \caption{Statistical behavior of the indicators derived from the monthly connectivity matrices computed for each type of current during our simulated period. Mean values are indicated by white squares}
+    \label{fig:connect}
+\end{figure}
+
+% \begin{table}
+%     \centering
+%     \begin{tabular}{|l|c|c|c|}
+%         \hline
+%                                    & mean currents      & bottom currents    & surface currents   \\
+%         \hline
+%         \makecell{mean weighted \\
+%         connectivity length [km]}  & 20.63              & 12.25              & 21.39              \\
+%         \hline
+%         \makecell{mean exchange 
+%         \\probability}             & $2.9\times 10^{-4}$ & $7.5\times 10^{-4}$ & $1.8\times 10^{-4}$ \\
+%         \hline
+%         \makecell{mean outgoing \\
+%         degree}                    & 416                & 159                & 321 \\
+%         \hline
+%         \makecell{mean local  \\
+%         retention}                 & 0.001              & 0.0021             & 0.0003 \\
+%         \hline
+%     \end{tabular}
+%     \caption{Mean values of the graph theory indicators used to analyze the connectivity matrices obtained with mean, bottom and surface currents}
+%     \label{tab:connect}
+% \end{table}
 
 \subsection{Epidemiological model results}
 
@@ -196,7 +240,8 @@ Best fit to observations is obtained with transmission rate $\beta_0^{-1}'=6.45$
     \label{fig:calibration}
 \end{figure}
 
-Using the above calibrated epidemiological parameters, epidemiological model simulations were performed for each type of currents and different values of the infection threshold $I_0$. A summary of the simulation results are shown in figure \ref{fig:results}. Two metrics are used to assess the accuracy of the model. First, the modeled front speed is compared to the reference rate of 92 m/day derived by \citep{muller2020spatial}. Furthermore, we compute the mean of the distances between each point where the SCTLD has been observed during our simulated period and the centroid of the closest reef polygon predicted to be infected by our model during the same period. Figure \ref{fig:results} show that mean barotropic currents outperform other types of current regarding both criteria with a front speed of 107 m/day and a mean accuracy of $\slim ~1.2$ km; while surface currents produce the worst results with respect to both front speed and proximity to the observed affected reefs.
+\textcolor{blue}{[describe results of figure \ref{fig:results} as much as possible]}
+Using the above calibrated epidemiological parameters, epidemiological model simulations were performed from 1st May 2018 to 1st April 2019 for each type of currents and different values of the infection threshold $I_0$. A summary of the simulation results are shown in figure \ref{fig:results}. Two metrics are used to assess the accuracy of the model. First, the modeled front speed is compared to the reference rate of 92 m/day derived by \citep{muller2020spatial}. Furthermore, we compute the mean of the distances between each point where the SCTLD has been observed during our simulated period and the centroid of the closest reef polygon predicted to be infected by our model during the same period. Figure \ref{fig:results} show that mean barotropic currents outperform other types of current regarding both criteria with a front speed of 107 m/day and a mean accuracy of $\slim ~1.2$ km; while surface currents produce the worst results with respect to both front speed and proximity to the observed affected reefs.
 
 Moreover, results of Fig. \ref{fig:results} show a strong dependence to infection threshold $I_0$. Front speeds of both mean and bottom currents reach a plateau for values of infection threshold between $I_0=0.05\%$ and $I_0=0.1\%$, while the minimal prediction error is attained around $I_0 \approx 0.078\%$ with mean currents. For $I_0 > 0.1\%$, intra-reef infection is strongly impeded and populations of infectious individuals on infected reefs are not sufficiently large to infect other colonies on reefs they are connected to. For values of $I_0$ lower than $0.05\%$ on the other hand, intra-reef infection dominates and coral population on infected reefs is removed too fast to efficiently spread the disease through the network. Model results suggest that propagation of the disease only occurs for fairly small values of $\I_0$, implying low coral resistance to the causative agent of the SCTLD. 
 
@@ -207,16 +252,14 @@ Moreover, results of Fig. \ref{fig:results} show a strong dependence to infectio
     \label{fig:results}
 \end{figure}
 
-The differences between the three modeled types of currents shown in figure \ref{fig:results} can be explained by analyzing the trajectories of the particles used to model the transport of the vector of the causative agent of the disease, as illustrated in Fig. \ref{fig:traj}. Due to the impact of wind on positively buoyant materials, particles driven by surface currents are likely to be blown away from the reefs (see upper part of Fig. \ref{fig:traj}). Moreover, even when winds are pushing particles along the reef line, these particles spend less time over the same region than particles driven by mean and bottom currents (see lower part of Fig. \ref{fig:traj}. Smaller amounts of particle mass will therefore settle on reef polygons, leading to lower entries of the potential connectivity matrix, \ie lower exchange probabilities between reefs. Hence, despite being able to displace infected materials on greater distances, surface currents are less likely to drive the propagation of the disease. Particles driven by bottom currents, on the other hand, remain longer over the same region, producing larger entries of the potential connectivity matrix. Due to these large exchange probabilities between reefs, bottom currents are better at propagating the disease (Fig. \ref{fig:results}). Nevertheless, bottom currents being relatively slower, exchanges of infected materials occur on a limited geographical range. Mean barotropic currents, that carry particles on greater distances while allowing for sufficiently large amounts of infected mass to settle on reef polygons, are thus best suited to propagate the disease (Fig. \ref{fig:results}).
-
 The results shown in figure \ref{fig:results} were obtained by removing the large reef located North to Vaca key, denoted Vaca reef as in \cite{frys20}, from our reef polygons. Preliminary simulations showed that this reef has close to no impact on the modeled spread of the disease to the rest of the FRT, as it sends few infectious matters to southerly and easterly neighboring reefs. Moreover, Vaca reef has a low coral coverage ($0-10\%$), which strongly impedes disease spread on the reef. However, as coral coverage is not taken into account in our epidemiological model, propagation of the disease on the reef was overestimated. This led to unrealistically strong modeled front speed variations due to the large size of the reef. Consequently, and in the absence of SCTLD observations on Vaca reef, it has been removed from our reef polygons in order to avoid overestimation of the disease spread.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=.9\textwidth]{figures/traj.png}
-    \caption{}
-    \label{fig:traj}
-\end{figure}
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=.9\textwidth]{figures/traj.png}
+%     \caption{}
+%     \label{fig:traj}
+% \end{figure}
 
 %\begin{figure}[h]
 %    \centering
@@ -232,14 +275,17 @@ The results shown in figure \ref{fig:results} were obtained by removing the larg
 
 %% --- SUMMARY OF TAKE HOME MESSAGES --- %%
 
-Calibrating our model with observations, we found a characteristic transmission time of 6.45 days as well as a removal rate of 6.99 days for the SCTLD. Feeding this parameters to the model, our simulation suggest that only mean current are able to reproduce the observed spread o the disease. Bottom current do not spread infectious matter on a sufficient geographical range while surface currents do not allow infected elements to settle durably on reefs. This therefore suggests that the causative agent of the SCTLD disease might be transported within neutrally buoyant materials inside the water column. Assuming this mode of transport, propagation of the disease from reef to reef only occurs for a narrow range of values of infection threshold $I_0$. This threshold is defined as the maximum proportion of infectious corals that a colony can withstand without the disease to spread. As disease spread occurs for threshold values of in the range $0.05-0.1\%$, this suggests that corals have low resistance to the SCTLD.
+We have developed an epidemio-hydrodynamic model to simulate the spread of the SCTLD through the entire FRT. Calibrating our model with observations, we found that. Feeding this parameters to the model, our simulation suggest that only mean current are able to reproduce the observed spread o the disease. Bottom current do not spread infectious matter on a sufficient geographical range while surface currents do not allow infected elements to settle durably on reefs. This therefore suggests that the causative agent of the SCTLD disease might be transported within neutrally buoyant materials inside the water column. Assuming this mode of transport, propagation of the disease from reef to reef only occurs for a narrow range of values of infection threshold $I_0$. This threshold is defined as the maximum proportion of infectious corals that a colony can withstand without the disease to spread. As disease spread occurs for threshold values of in the range $0.05-0.1\%$, this suggests that corals have low resistance to the SCTLD.
 
 %% --- DISCUSSION OF TAKE HOME MESSAGES/MAIN RESULTS --- %%
 
 % 1. MODEL PARAMETERS
 After calibration with observations, the value of the ratio $\beta_0'/\sigma$ between intra-reef and removal rates is given by $1.0835$. This value being close to 1, modeled infectious individuals are removed from the system almost as fast as susceptible individuals get infected. This causes the proportion of infectious corals on the reefs to remain pretty low (\ie $\leq 0.4\%$) through time. This suggest that only a small fraction of the colony causes the disease to spread on the reef during the outbreak. \textcolor{blue}{[add some comments on tank experiments and say that they give transmission time within same order of magnitude]}. In this study, the same values were used for inter- and intra-reef rates $\beta$ and $\beta_0'$. This implies that the infectiousness of the causative agent is not reduced during its journey from reef to reef. However, to assess the impact of this assumption, epidemiological model simulations were performed with $\beta=\beta_0'/2$. The resulting disease front speeds did not exceed 20 m/day. This strong decrease can be explained by the interplay between inter- and intra- reef infection. Reducing inter-reef transmission rates decreases the proportion of infectious corals on reefs attained by infectious materials, which in turn reduces the amount of infectious matter sent to the rest of the network. This suggests that, to reproduce the observed spread, inter- and intra-reef transmission rates must have similar magnitude, \ie that the causative agent is barely not degraded while traveling from reef to reef. \textcolor{blue}{Is this consistent with Rhodobacterales and Rhizobiales ?}
- 
+
 % 2. MEAN BAROTROPIC CURRENTS => NEUTRALLY BUOYANT VECTOR 
+
+The fact that mean barotropic currents outperform the other modes of transport in \ref{fig:results} can be explained by analyzing the trajectories of the particles used to model the transport of the vector of the causative agent of the disease. Due to the impact of wind on positively buoyant materials, particles driven by surface currents are likely to be blown away from the reefs. Moreover, even when winds are pushing particles along the reef line, these particles spend less time over the same region than particles driven by mean and bottom currents. Smaller amounts of particle mass will therefore settle on reef polygons, leading to lower entries of the potential connectivity matrix, \ie lower exchange probabilities between reefs. Hence, despite being able to displace infected materials on greater distances, surface currents are less likely to drive the propagation of the disease. Particles driven by bottom currents, on the other hand, remain longer over the same region, producing larger entries of the potential connectivity matrix. Due to these large exchange probabilities between reefs, bottom currents are better at propagating the disease (Fig. \ref{fig:results}). Nevertheless, bottom currents being relatively slower, exchanges of infected materials occur on a limited geographical range. Mean barotropic currents, that carry particles on greater distances while allowing for sufficiently large amounts of infected mass to settle on reef polygons, are thus best suited to propagate the disease (Fig. \ref{fig:results}).
+
 Model suggests causative agent transported by neutrally buoyant materials
 \begin{itemize}
     \item What would be candidates for vector then ?
