@@ -5,17 +5,14 @@ TD: Would it be possible to have some references regarding bottom current parame
 # ERINN
 
 TD: Would it be possible to get the data used to plot the upper graph of Fig. 2 in order to merge two plots into one graph ?
-TD: In the current formulation of the model, we define two transmission rates for intra- and inter-reef infectious (although we give them the same value). Does that make sense ? Do we have any reason to believe that the 2 processes occur with different transmission rates of should we simplify the model by using one single transmission rate ?
-TD: If I remember well, the transmission experiments performed showed a transmission time of ~10.5 days ? Is that so ? And can we cite these results to support the 6.45 days obtained by model fitting to observations ?
-
-# DAN
-
-TD: Could you please provide the coral disease references you mentioned in your comment ?
-% * <Daniel Holstein> 08:04:56 14 May 2020 UTC-0500:
-% Will do this week!
+TD: If I remember well, the transmission experiments performed showed a transmission time of ~10.5 days ? Is that so ? And can we cite/use these results to support the 6.45 days obtained by model fitting to observations ?
+TD: What about the ballast water team ?
 
 # ALL
 
 TD: Do we have any idea of time needed for organic matter degradation by seawater ? That might be useful for the discussion about our LPT experiments.
-TD: Model results suggest a that coral have weak resistance against causative agent of SCTLD (I0 between 0.05% and 0.1%). What would it mean from a biological point of view ?
-TD: If causative agent is transported by neutrally buoyant materials, what are the likely vector candidates ? Do we have knowledge of another disease transmitted in a similar way ? 
+TD: How can we analyze the fact that infection threshold I0 is fairly low (0.05%-0.1%) from a biological point of view
+TD: If causative agent is transported by neutrally buoyant materials, what are the likely vector candidates ?
+TD: How do our results compare with the study of Rosales et al ?
+    * Are our results consistent with Rhodobacterales and Rhizobiales ?
+    * Are our results consistent with the fact that those bacteria are found in sediments ?
