@@ -100,7 +100,7 @@ The simulated currents can then be used to model dispersal of infectious materia
 Using these three velocity fields, virtual particles are then released on all the reefs composing the FRT to model the dispersal of infected materials carrying the disease causative agent. The locations of the reefs of Florida are extracted from the "coral reefs and hardbottom" layer of the Unified Florida Reef Tract Map \citep{fwc2017unified}. The polygon of this reef map are then further divided into 500 m squares in order to track the propagation of the disease with a finer geographical resolution, generating a total of 16823 polygons. % \textcolor{red}{(14058 without the big Vaca reef)}
 At the beginning of each simulated months and for each type of currents, a total of about $1.5 \times 10^6$ particles are released over all the reef polygons. These particles have a state composed of their polygon of origin as well as their mass, initialized to 1, that they loose at a constant rate $\gamma$ as they are moved by surface, mean or bottom currents. \textcolor{blue}{As monthly simulations are performed, the value of $\gamma$ is chosen so that particles have a half life of 30 days}. When the particles are brought over reef polygons by currents, the amount of infected mass that lands on the polygon is recorded in monthly potential connectivity matrices whose entries are denoted $C_{ij}$. The matrix rows correspond to the source reefs and the columns correspond to the destination reefs. Hence $C_{ij}$ represents the mass of infected material originating from sub-reef i that has settled on sub-reef j. This matrix is then normalized by dividing each of its rows $i$ by the the total mass of particles released on polygon $i$ in order to obtained the normalized potential connectivity matrix $\tilde{C}$, whose entry $\tilde{C}_{ij}$ gives the probability that infectious material produced on sub-reef $i$ settles on sub-reef $j$. Connectivity matrices are computed for each type of current and for each month of the simulated period.
 
-These connectivity matrices can be more easily handled by interpreting them as large graphs whose vertices are reefs. Such networks can then be analyzed using graph theory tools. In this study, 5 potential connectivity measures are used to interpret our monthly computed networks. These indicators are summarize in Table \ref{tab:indicator}
+These connectivity matrices can be more easily handled by interpreting them as large graphs whose vertices are reefs. Such networks can then be analyzed using graph theory tools. In this study, 4 potential connectivity measures are used to interpret our monthly computed networks. These indicators are described in Table \ref{tab:indicator}
 
 \begin{table}
     \centering
@@ -119,10 +119,10 @@ These connectivity matrices can be more easily handled by interpreting them as l
             Fraction exchanged &
             Fraction of infectious material produced on a given reef that settles on another reef &
             Efficiency of potential disease spread  \\
-        \hline
-            Fraction lost &
-            Fraction of infectious material produced on a reef that does not settle on any other reef &
-            Efficiency of potential disease spread \\
+        % \hline
+        %     Fraction lost &
+        %     Fraction of infectious material produced on a reef that does not settle on any other reef &
+        %     Efficiency of potential disease spread \\
         \hline
             Isolation &
             Fraction of infectious material settling on a given reef that has been released on another reef &
@@ -176,7 +176,7 @@ In order to solve Eqs. \ref{eq:epidemio}, initial conditions are needed, \ie pro
 \subsubsection{Computation of front displacement rate}
 \begin{figure}
     \centering
-    \includegraphics[width=.95\textwidth]{figures/hull_example.png}
+    \includegraphics[width=.99\linewidth]{figures/hull_example.png}
     \caption{Method used to compute the disease front displacement during a simulated time interval.\textbf{a.} Concave hull of the infected polygons at the beginning of the simulated period $H_0$. \textbf{b.} Concave hull of the polygons infected during the simulated simulated $H_1$. \textbf{c.} Arrow showing the computed front displacement during simulated time interval between $H_0$ and $H_2$, the union of $H_0$ and $H_1$.}
     \label{fig:hull}
 \end{figure}
@@ -198,7 +198,7 @@ where $L_{ji}$ is the distance between reef polygons $j$ and $i$. Another releva
 
 \begin{figure}
     \centering
-    \includegraphics[width=.99\textwidth]{figures/connect_paper.png}
+    \includegraphics[width=.8\textwidth]{figures/connect_paper.png}
     \caption{Statistical behavior of the indicators derived from the monthly connectivity matrices computed for each type of current during our simulated period. Mean values are indicated by white squares}
     \label{fig:connect}
 \end{figure}
