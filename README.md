@@ -19,10 +19,9 @@
 1. Connectivity indicators &rarr; table
 
 ### Epidemiological model results
-2. Calibaration as a result &rarr; Fig. 3
+2. Calibration as a result &rarr; Fig. 3
 3. Barotropic currents give best match &rarr; Fig. 4
 3. I<sub>0</sub>: plateau/optimal interval &rarr; Fig. 4
-4. Trajectories of particles (why surface and bottom currents do not spread the disease realistically) &rarr; Fig. 5
 
 ## Discussion and conclusions (structure should be reordered)
 
